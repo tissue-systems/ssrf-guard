@@ -1,0 +1,29 @@
+[package]
+name = "ssrf-guard"
+version = "0.1.0"
+edition = "2024"
+rust-version = "1.88"
+authors = ["Tissue Systems, Inc. <oss@tissue.systems>"]
+license = "MIT OR Apache-2.0"
+description = "Fetch user-supplied URLs from a server without reaching its private network"
+repository = "https://github.com/tissue-systems/ssrf-guard"
+documentation = "https://docs.rs/ssrf-guard"
+readme = "README.md"
+keywords = ["ssrf", "http", "reqwest", "security", "dns-rebinding"]
+categories = ["network-programming", "web-programming::http-client"]
+exclude = [".github/"]
+
+[dependencies]
+bytes = "1"
+http = "1"
+reqwest = { version = "0.13.5", default-features = false, features = ["rustls"] }
+# The same rustls and verifier reqwest uses. reqwest only takes the shared
+# TLS config in src/fetch.rs if it was built with its own rustls.
+rustls = "0.23"
+rustls-platform-verifier = "0.7"
+thiserror = "2"
+tokio = { version = "1", features = ["net", "rt", "time"] }
+url = "2"
+
+[dev-dependencies]
+tokio = { version = "1", features = ["io-util", "macros", "net", "rt-multi-thread", "time"] }
